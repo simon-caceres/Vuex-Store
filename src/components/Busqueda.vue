@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in juegos" :key ="index" v-bind:style="{ color: item.color }">
+            <tr v-for="(item, index) in listarJuegos" :key ="index" v-bind:style="{ color: item.color }">
             <th >{{item.codigo}}</th>
             <th >{{item.nombre}}</th>
             <th>{{item.stock}}</th>
@@ -54,6 +54,7 @@
             </tr>
         </tbody>
         </table>
+
   </div>
 
 
@@ -61,6 +62,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     data() {
         return {
@@ -71,14 +74,7 @@ export default {
         }
     },
 
-    created() {
-        this.classes()
-    },
-
     methods: {
-        classes() {
-             this.juegos = this.$store.state.juegos
-        },
 
         filtrado() {
             const resultado = this.$store.state.juegos.find( item => item.codigo == this.buscando );
@@ -86,7 +82,11 @@ export default {
             this.result = resultado
             this.showResult = false
         }
-    }
+    },
+
+    computed: { 
+        ...mapGetters(['listarJuegos']),
+     }
 
 }
 </script>
